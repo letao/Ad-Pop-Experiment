@@ -1,16 +1,19 @@
 ---
 title: "Experiment 9 ad pop"
-output: github_document
+output:
+  github_document:
+    toc: true
+    toc_depth: 2
 ---
 
 
 
-# Experiment 1
+## Experiment 1
 >Overview of the code for experiment 1, data clean-up and statistical models 
 
 <br>
 
-### Data clean-up
+## Data clean-up
 
 >Overview of data
 
@@ -233,7 +236,7 @@ ggplot(prod_count_2, aes(x = argument, y = pctg)) +
 
 <br>
 
-### Chi squared model
+## Chi squared model
 
 > Create the table for a chi squared test and run the test results. Clear indication for a difference between the 3 groups of expressions
 
@@ -297,7 +300,7 @@ chi.counts$stdres     # standardized residuals
 
 
 
-### Bayesian Models 1 and 2
+## Bayesian Models 1 and 2
 
 >Create the participant(id) data frame for Bayesian model testing. This will be our first model, with particiapnt only data 
 
@@ -630,7 +633,7 @@ gridExtra::grid.arrange(cc,cc2, nrow = 1)
 
 <br>
 
-### Bayesian Model3
+## Bayesian Model3
 
 <br>
 
