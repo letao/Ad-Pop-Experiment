@@ -1,13 +1,3 @@
----
-title: "Experiment 9 ad pop"
-output:
-  github_document:
-    toc: true
-    toc_depth: 2
----
-
-
-
 ## Experiment 1
 >Overview of the code for experiment 1, data clean-up and statistical models 
 
@@ -47,20 +37,13 @@ head(prod)
 ```
 
 ```
-##                  id item item.type statement statement.rt agreement
-## 1 R_AFjOleDXKveANvX  I1x  critical         1        3.079     agree
-## 2 R_AFjOleDXKveANvX  I2x  critical         4        3.034  disagree
-## 3 R_AFjOleDXKveANvX  I3x  critical         4        4.207  disagree
-## 4 R_AFjOleDXKveANvX  I4x  critical         2        7.027     agree
-## 5 R_AFjOleDXKveANvX  I5x  critical         1        3.840     agree
-## 6 R_AFjOleDXKveANvX  I6x  critical         2        3.383     agree
-##   strength argument argument.rt word.count gender age
-## 1    fully        3       3.234        286      2  35
-## 2    fully        3       3.243        194      2  35
-## 3    fully        3       5.547        239      2  35
-## 4 somewhat        2       3.135        205      2  35
-## 5    fully        2       5.748        193      2  35
-## 6 somewhat        2       6.313        218      2  35
+##                  id item item.type statement statement.rt agreement strength argument argument.rt word.count gender age
+## 1 R_AFjOleDXKveANvX  I1x  critical         1        3.079     agree    fully        3       3.234        286      2  35
+## 2 R_AFjOleDXKveANvX  I2x  critical         4        3.034  disagree    fully        3       3.243        194      2  35
+## 3 R_AFjOleDXKveANvX  I3x  critical         4        4.207  disagree    fully        3       5.547        239      2  35
+## 4 R_AFjOleDXKveANvX  I4x  critical         2        7.027     agree somewhat        2       3.135        205      2  35
+## 5 R_AFjOleDXKveANvX  I5x  critical         1        3.840     agree    fully        2       5.748        193      2  35
+## 6 R_AFjOleDXKveANvX  I6x  critical         2        3.383     agree somewhat        2       6.313        218      2  35
 ```
 
 
@@ -224,12 +207,6 @@ ggplot(prod_count_2, aes(x = argument, y = pctg)) +
 ```
 
 ![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
-
-
-
-
-
-
 
 
 
@@ -604,8 +581,6 @@ cc <- plot(marginal_effects(bm2, plot = F)) [[1]] + theme_bw() +
    ggtitle("Participant model")
 ```
 
-![plot of chunk unnamed-chunk-25](figure/unnamed-chunk-25-1.png)
-
 ```r
 ##plot of model
 cc2 <- plot(marginal_effects(bm3, plot = F)) [[1]] + theme_bw() +
@@ -613,19 +588,12 @@ cc2 <- plot(marginal_effects(bm3, plot = F)) [[1]] + theme_bw() +
    ggtitle("Item model")
 ```
 
-![plot of chunk unnamed-chunk-25](figure/unnamed-chunk-25-2.png)
-
 ```r
 ##plot of both items and participant models
 gridExtra::grid.arrange(cc,cc2, nrow = 1)
 ```
 
 ![plot of chunk unnamed-chunk-25](figure/unnamed-chunk-25-3.png)
-
-
-
-
-
 
 
 
@@ -721,10 +689,8 @@ hypothesis(bm4, "exp(muSome_strengthsomewhat) = exp(muSome_Intercept)") ## Bayes
 
 ```
 ## Hypothesis Tests for class b:
-##                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
-## 1 (exp(muSome_stren... = 0      2.1      0.27      1.6     2.66          0
-##   Post.Prob Star
-## 1         0    *
+##                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio Post.Prob Star
+## 1 (exp(muSome_stren... = 0      2.1      0.27      1.6     2.66          0         0    *
 ## ---
 ## 'CI': 90%-CI for one-sided and 95%-CI for two-sided hypotheses.
 ## '*': For one-sided hypotheses, the posterior probability exceeds 95%;
@@ -738,10 +704,9 @@ hypothesis(bm4, "exp(muEveryone_strengthsomewhat) = exp(muEveryone_Intercept)") 
 
 ```
 ## Hypothesis Tests for class b:
-##                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio
-## 1 (exp(muEveryone_s... = 0     0.54      0.11     0.33     0.77          0
+##                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio Post.Prob Star
+## 1 (exp(muEveryone_s... = 0     0.54      0.11     0.33     0.77          0         0    *
 ##   Post.Prob Star
-## 1         0    *
 ## ---
 ## 'CI': 90%-CI for one-sided and 95%-CI for two-sided hypotheses.
 ## '*': For one-sided hypotheses, the posterior probability exceeds 95%;
@@ -793,8 +758,7 @@ plot(marginal_effects(bm4x, probs = c(.05,.95), plot = F, categorical = TRUE)) [
    xlab("Strength of agreement") + ylab("probability of replies") + 
    labs(colour = "Quantifier", fill = "Quantifier")
 ```
-
-![plot of chunk unnamed-chunk-34](figure/unnamed-chunk-34-1.png)![plot of chunk unnamed-chunk-34](figure/unnamed-chunk-34-2.png)
+![plot of chunk unnamed-chunk-34](figure/unnamed-chunk-34-2.png)
 
 
 
