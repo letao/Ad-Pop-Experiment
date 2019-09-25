@@ -10,5 +10,5 @@ Folders that contain R scripts used to transform and analyse the data in both ex
 -Workflow <br>
 Documents containing the code, step by step proceedure and all the coments for both experiments.
 
--figures <br>
+-Figure <br>
 Folder containing all the plots for experiments
