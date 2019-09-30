@@ -22,7 +22,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r Loading data}
 ##First look at the data
 
-prod <- read.csv("Arg_Production_task2.csv")
+prod <- read.csv("data/Arg_Production_task.csv")
 
 str(prod)
 
@@ -241,7 +241,7 @@ mean(prod_count_item$n)
 
 <br>
 
->illustration of cthe hosen prior distributions for model 1 and model 2. Since the responses in our models (negative binomial) will be on the log scale we look at dlnorm() function to simulate our priors, nothing below 0 will be modeled (see Mcelerth (2016) p354)
+>illustration of the chosen prior distributions for model 1 and model 2. Since the responses in our models (negative binomial) will be on the log scale we look at dlnorm() function to simulate our priors, nothing below 0 will be modeled (see Mcelerth (2016) p354)
 
 ```{r Priors for models 1 and 2}
 ##prior for model 1
@@ -327,10 +327,10 @@ bm2.2_l <- loo(bm2.2)
 
 <br>
 
->Comparison of the two models using the the same proceedure as above. No clear evidence to prefer the intecrept and slope model. In this case choice falls for the more parsimonious model bm2
+>Comparison of the three models using the the same proceedure as above. No clear evidence to prefer the intecrept and slope model. In this case choice falls for the more parsimonious model bm2
 
 ```{r}
-loo_compare(bm2_l,bm2.2_l) ## simple loo comparison
+loo_compare(bm2_l,bm2.2_l, bm2n_l) ## simple loo comparison
 ```
 
 <br>
@@ -411,10 +411,10 @@ bm3.2_l <- loo(bm3.2)
 
 <br>
 
->Comparison of the two models using the same proceedure as above. No clear evidence to prefer the intecrept and slope model.
+>Comparison of the two models using the same proceedure as above. No evidence to prefer the intecrept and slope model.
 
 ```{r}
-loo_compare(bm3_l,bm3.2_l) ## simple loo comparison
+loo_compare(bm3_l,bm3.2_l,bm3n_l) ## simple loo comparison
 ```
 
 <br>
@@ -512,7 +512,7 @@ loo_compare(bm4n_l, bm4_l) ## simple loo comparison
 
 <br>
 
-> Bayes factor for variables in our Intercept model 
+> Bayes factor for variables in our Intercept model. In both cases we see that there is strong evidence for the difference between strength of argument and how it affects choice of Some or Everyone. BF01 < 0.00001 in both cases, meaning that all the posterior samples from our test are on the sameside of the value dividing the hypothesis (see Burkner 2017)
 
 ```{r}
 hypothesis(bm4, "exp(muSome_strengthsomewhat) = exp(muSome_Intercept)") ## BayesFactor test with Savage-Dickey method for equality of Some across both levels of agreement strength
@@ -543,7 +543,7 @@ bm4.2_l <- loo(bm4.2)
 >Comparison of the two models using the loo package. No clear indication for preference for the intecrept and slope model. Intercept only model seems to be on par with the more complex model
 
 ```{r}
-loo_compare(bm4_l,bm4.2_l) ## simple loo comparison
+loo_compare(bm4_l,bm4.2_l, bm4n_l) ## simple loo comparison
 ```
 
 <br>
