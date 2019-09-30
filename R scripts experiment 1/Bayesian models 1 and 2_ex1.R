@@ -44,7 +44,7 @@ bm2 <- brm(n ~ argument + (1|id),
 
 bm2_l <- loo(bm2)
 
-##comparison of null model and bm2
+##comparison of null model and bm2 
 loo_compare(bm2n_l,bm2_l)
 
 model_weights(bm2, bm2.2, weights = "loo2")
@@ -62,10 +62,10 @@ bm2.2 <- brm(n ~ argument + (argument||id),
 
 bm2.2_l <- loo(bm2.2)
 
-##comparison of model bm2 and bm2.2
-loo_compare(bm2_l_l,bm2.2_l)
+##comparison of model bm2, bm2.2 and bm2n
+loo_compare(bm2_l_l, bm2.2_l, bm2n_l)
 
-model_weights(bm2n, bm2.2)
+model_weights(bm2n, bm2.2, bm2n, weights = "loo2")
 
 
 ##plot of the model
@@ -117,16 +117,16 @@ bm3.2 <- brm(n ~ argument + (argument||item),
                        set_prior("normal(3,1)", class = "Intercept")),
              sample_prior = TRUE,
              save_all_pars = TRUE,
-             iter = 10000,
+             iter = 4000,
              cores = 2,
              data = prod_count_item)
 
 bm3.2_l <- loo(bm3.2)
 
-##Comparison between b3 and b3.2 models
-loo_compare(bm3_l, bm3.2_l)
+##Comparison between bm3, bm3.2 and bm3.n models
+loo_compare(bm3_l, bm3.2_l, bm3n_l)
 
-model_weights(bm3, bm3.2, weights = "loo2")
+model_weights(bm3, bm3.2, bm3n, weights = "loo2")
 
 
 ##plot of model b3

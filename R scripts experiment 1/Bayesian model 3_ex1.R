@@ -55,10 +55,10 @@ bm4.2 <- brm(argument ~ 0 + Intercept + strength + (strength||id) + (strength||i
 
 bm4.2_l <- loo(bm4.2)
 
-##model comparison between bm4 and bm4.2
-loo_compare(bm4_l, bm4.2_l)
+##model comparison between bm4 and bm4.2 and bm4.n
+loo_compare(bm4_l, bm4.2_l, bm4n_l)
 
-model_weights(bm4, bm4.2, weights = "loo2")
+model_weights(bm4, bm4.2, bm4.n, weights = "loo2")
 
 ##Plot of the intercept model
 plot(marginal_effects(bm4x, probs = c(.05,.95), plot = F, categorical = TRUE)) [[1]] + 
