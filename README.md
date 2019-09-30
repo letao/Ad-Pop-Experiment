@@ -1,14 +1,14 @@
 # Ad-Pop-Experiment
-Repository with the data and code for the Ad Pop Experiment.
+Repository with the data and code for the Ad Pop Experiments published as xxx.
 
 -Data <br>
-Folder that contains the csv files with data for both experiments.
+Folder that contains the csv files with data for both experiments, arg_production_task2 for experiment 1 and anchoring_task for experiment 2.
 
 -R Scripts <br>
 Folders that contain R scripts used to transform and analyse the data in both experiments.
 
 -Workflow <br>
-Documents containing the code, step by step proceedure and all the coments for both experiments.
+Documents containing the code, step by step proceedure and all the comments for both experiments.
 
 -Figure <br>
 Folder containing all the plots for experiments
