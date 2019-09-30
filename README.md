@@ -12,3 +12,6 @@ Documents containing the code, step by step proceedure and all the comments for 
 
 -Workflow_files <br>
 Folders containing all the plots for experiments 1 and 2
+
+-Markdown files <br>
+Folders containing rmarkdown file to create workflow.md
