@@ -95,19 +95,6 @@ prod_tsk <- prod_data %>%
    )
 ```
 
-    ## Warning: funs() is soft deprecated as of dplyr 0.8.0
-    ## Please use a list of either functions or lambdas: 
-    ## 
-    ##   # Simple named list: 
-    ##   list(mean = mean, median = median)
-    ## 
-    ##   # Auto named with `tibble::lst()`: 
-    ##   tibble::lst(mean, median)
-    ## 
-    ##   # Using lambdas
-    ##   list(~ mean(., trim = .2), ~ median(., na.rm = TRUE))
-    ## This warning is displayed once per session.
-
 <br>
 
 > Results of transformations
