@@ -10,5 +10,8 @@ Folders that contain R scripts used to transform and analyse the data in both ex
 -Workflow <br>
 Documents containing the code, step by step proceedure and all the comments for both experiments.
 
--Figure <br>
-Folder containing all the plots for experiments
+-Workflow_files <br>
+Folders containing all the plots for experiments 1 and 2
+
+-Markdown files <br>
+Folders containing rmarkdown file to create workflow.md

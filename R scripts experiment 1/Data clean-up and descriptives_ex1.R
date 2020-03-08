@@ -21,7 +21,7 @@ prod_data <- prod %>%
   ##rename the variables
   mutate(
     argument = recode(argument,
-                      "3" = "No", 
+                      "3" = "X", 
                       "2" = "Some", 
                       "1" = "Everyone"),
     statement = recode(statement,
