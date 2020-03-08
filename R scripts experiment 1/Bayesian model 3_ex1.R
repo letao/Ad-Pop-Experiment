@@ -21,7 +21,10 @@ bm4n_l <- loo(bm4.n)
 ##Intercept model, with specified seperate intercepts ( 0 + Intercept) for each category of agreement strength 
 bm4 <- brm(argument ~ 0 + Intercept + strength + (1|id) + (1|item), 
            family = categorical(link = logit),
-           prior = c(set_prior("normal(0,1)", class = "b")),
+           prior = c(set_prior("normal(0,1)", class = "b", coef = "Intercept", dpar = "muEveryone"), 
+                     set_prior("normal(0,1)", class = "b", coef = "strengthsomewhat", dpar = "muEveryone"),
+                     set_prior("normal(0,1)", class = "b", coef = "Intercept", dpar = "muSome"), 
+                     set_prior("normal(0,1)", class = "b", coef = "strengthsomewhat", dpar = "muSome")),
            sample_prior = TRUE,
            save_all_pars = TRUE,
            cores = 2,
@@ -46,7 +49,10 @@ hypothesis(bm4x, "exp(muEveryone_strengthsomewhat) = exp(muEveryone_Intercept)")
 ##Intercept and uncorrelated slipe model 
 bm4.2 <- brm(argument ~ 0 + Intercept + strength + (strength||id) + (strength||item), 
              family = categorical(link = logit),
-             prior = c(set_prior("normal(0,1)", class = "b")),
+             prior = c(set_prior("normal(0,1)", class = "b", coef = "Intercept", dpar = "muEveryone"), 
+                       set_prior("normal(0,1)", class = "b", coef = "strengthsomewhat", dpar = "muEveryone"),
+                       set_prior("normal(0,1)", class = "b", coef = "Intercept", dpar = "muSome"), 
+                       set_prior("normal(0,1)", class = "b", coef = "strengthsomewhat", dpar = "muSome")),
              sample_prior = TRUE,
              save_all_pars = TRUE,
              cores = 2,
@@ -61,7 +67,7 @@ loo_compare(bm4_l, bm4.2_l, bm4n_l)
 model_weights(bm4, bm4.2, bm4.n, weights = "loo2")
 
 ##Plot of the intercept model
-plot(marginal_effects(bm4x, probs = c(.05,.95), plot = F, categorical = TRUE)) [[1]] + 
+plot(marginal_effects(bm4, probs = c(.05,.95), plot = F, categorical = TRUE)) [[1]] + 
   theme_bw() +
   xlab("Strength of agreement") + ylab("probability of replies") + 
   labs(colour = "Quantifier", fill = "Quantifier")

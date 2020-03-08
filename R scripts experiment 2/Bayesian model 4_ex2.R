@@ -7,11 +7,7 @@
 1/(1+exp(-alpha))
 
 
-##defining priors
-prior_z <- c(set_prior("normal(0,.5)", class = "b"),
-             set_prior("normal(0,1)", class = "sd"))
-
-##illustration of the priors selected
+##illustration of the potential priors selected
 curve(dnorm(x, 0,  .5) , from=-5, to=5)
 curve(dnorm(x, 0,  1) , from=-5, to=5)
 
@@ -25,6 +21,7 @@ fit2n <- brm((value/100) ~ 1 + (1|id) + (1|item),
              save_all_pars = TRUE,
              prior = set_prior("normal(0,.5)", class = "Intercept"),
              cores = 2,
+             iter = 4000,
              data = anchoring)
 
 fit2n_l <- loo(fit2n)
@@ -35,7 +32,10 @@ fit2z <- brm((value/100) ~ 0 + Intercept + quantifier + (1|id) + (1|item),
              family = "zero_one_inflated_beta",
              sample_prior = TRUE,
              save_all_pars = TRUE,
-             prior = prior_z,
+             prior = c(set_prior("normal(0, .5)", class = "b", coef = "quantifierEveryone"),
+                       set_prior("normal(0, .5)", class = "b", coef = "quantifierSome"),
+                       set_prior("normal(.5, .5)", class = "b", coef = "Intercept")),
+             iter = 4000,
              cores = 2,
              data = anchoring)
 
@@ -54,7 +54,9 @@ fit2y <- brm((value/100) ~ 0 + Intercept + quantifier + (quantifier||id) + (quan
              family = "zero_one_inflated_beta",
              sample_prior = TRUE,
              save_all_pars = TRUE,
-             prior = prior_z,
+             prior = c(set_prior("normal(0, .5)", class = "b", coef = "quantifierEveryone"),
+                       set_prior("normal(0, .5)", class = "b", coef = "quantifierSome"),
+                       set_prior("normal(.5, .5)", class = "b", coef = "Intercept")),
              iter = 4000,
              cores = 2,
              data = anchoring)
@@ -66,7 +68,7 @@ pp_check(fit2y)
 
 
 ##simple loo comparions of the three models
-loo_compare(fit2y, fit2z_l, fit2n_l)
+loo_compare(fit2y_l, fit2z_l, fit2n_l)
 
 model_weights(fit2y, fit2z, fit2n, weights = "loo2")
 

@@ -3,11 +3,14 @@
 
 
 ##read the csv file
-anchoring <- read_csv(file.choose())
+my.data <- read_csv(file.choose())
 
-##Change the factor levels to set dummy coding with No as base level
-anchoring$quantifier <- factor(anchoring$quantifier, 
-                               levels = c("No", "Some", "Everyone"))
+##Change the factor levels to set dummy coding with X as base level
+anchoring <- my.data %>% mutate(quantifier = factor(quantifier, 
+                                                    levels = c("No", "Some", "Everyone")),
+                                quantifier = recode(quantifier,
+                                                    "No" = "X")
+                               )
 
 ##function to calculate confidence intervals with a gaussian normal distribution
 ci <- function(x,y) {
@@ -31,7 +34,7 @@ anchoring_sum <- anchoring %>%
   )
 
 ##plot of means from summary
-ggplot(anchoring_sum, aes(x=quantifier, y=mean)) +
+anchoring_plot <- ggplot(anchoring_sum, aes(x=quantifier, y=mean)) +
   geom_bar(stat = "identity", aes(fill = quantifier)) +
   coord_cartesian(ylim = c(30,90)) + scale_y_continuous(breaks=seq(30, 90, by = 10)) +
   geom_errorbar(aes(ymin= mean - ci, ymax = mean + ci), colour = "black", width = 0.2) +

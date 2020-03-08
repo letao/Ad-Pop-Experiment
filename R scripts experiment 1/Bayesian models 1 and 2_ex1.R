@@ -14,9 +14,10 @@ prod_count_item <- prod_tsk %>%
   count(argument, strength, item)
 
 
-##illustration of prior distribution, since the responses are on the log scale we look at dlnorm() function to simulate our priors. Nothing below 0 will be modeled check Mcelerth (2016) p354
 ##Prior distribution for the participant model
-curve(dlnorm(x, 2, 1), from = 0, to = 40) 
+curve(dnorm(x, 2, 1), from = -5, to = 5) 
+
+curve(dnorm(x, -1, 1), from = -5, to = 5) 
 
 ##null model for participants
 bm2n <- brm(n ~ 1 + (1|id), 
@@ -32,10 +33,11 @@ bm2n_l <- loo(bm2n)
 
 
 ## intercept model for participants
-bm2 <- brm(n ~ argument + (1|id), 
+bm2 <- brm(n ~ 0 + intercept + argument + (1|id), 
            family = negbinomial(link = log),
-           prior = c(set_prior("normal(2,1)", class = "b"), 
-                     set_prior("normal(2,1)", class = "Intercept")),
+           prior = c(set_prior("normal(2,1)", class = "b", coef = "intercept"), 
+                     set_prior("normal(-1,1)", class = "b", coef = "argumentEveryone"),
+                     set_prior("normal(-1,1)", class = "b", coef = "argumentSome")),
            sample_prior = TRUE,
            save_all_pars = TRUE,
            iter = 4000,
@@ -51,10 +53,11 @@ model_weights(bm2, bm2.2, weights = "loo2")
 
 
 ##slope without correlated intercpet model for participants
-bm2.2 <- brm(n ~ argument + (argument||id), 
+bm2.2 <- brm(n ~ 0 + intercept + argument + (argument||id), 
              family = negbinomial(link = log),
-             prior = c(set_prior("normal(2,1)", class = "b"), 
-                       set_prior("normal(2,1)", class = "Intercept")),
+             prior = c(set_prior("normal(2,1)", class = "b", coef = "intercept"), 
+                       set_prior("normal(-1,1)", class = "b", coef = "argumentEveryone"),
+                       set_prior("normal(-1,1)", class = "b", coef = "argumentSome")),
              sample_prior = TRUE,
              save_all_pars = TRUE,
              cores = 2,
@@ -63,7 +66,7 @@ bm2.2 <- brm(n ~ argument + (argument||id),
 bm2.2_l <- loo(bm2.2)
 
 ##comparison of model bm2, bm2.2 and bm2n
-loo_compare(bm2_l_l, bm2.2_l, bm2n_l)
+loo_compare(bm2_l, bm2.2_l, bm2n_l)
 
 model_weights(bm2n, bm2.2, bm2n, weights = "loo2")
 
@@ -92,10 +95,11 @@ bm3n <- brm(n ~ 1 + (1|item),
 bm3n_l <- loo(bm3n)
 
 ##intercept model for items
-bm3 <- brm(n ~ argument + (1|item), 
+bm3 <- brm(n ~ 0 + intercept + argument + (1|item), 
            family = negbinomial(link = log),
-           prior = c(set_prior("normal(3,1)", class = "b"), 
-                     set_prior("normal(3,1)", class = "Intercept")),
+           prior = c(set_prior("normal(3,1)", class = "b", coef = "intercept"), 
+                     set_prior("normal(-1,1)", class = "b", coef = "argumentEveryone"),
+                     set_prior("normal(-1,1)", class = "b", coef = "argumentSome")),
            sample_prior = TRUE,
            save_all_pars = TRUE,
            iter = 4000,
@@ -111,10 +115,11 @@ model_weights(bm3n, bm3, weights = "loo2")
 
 
 ##intercept and uncorrelated slope model for items
-bm3.2 <- brm(n ~ argument + (argument||item), 
+bm3.2 <- brm(n ~ 0 + intercept + argument + (argument||item), 
              family = poisson(link = log),
-             prior = c(set_prior("normal(3,1)", class = "b"), 
-                       set_prior("normal(3,1)", class = "Intercept")),
+             prior = c(set_prior("normal(3,1)", class = "b", coef = "intercept"), 
+                       set_prior("normal(-1,1)", class = "b", coef = "argumentEveryone"),
+                       set_prior("normal(-1,1)", class = "b", coef = "argumentSome")),
              sample_prior = TRUE,
              save_all_pars = TRUE,
              iter = 4000,
